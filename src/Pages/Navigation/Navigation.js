@@ -29,7 +29,7 @@ const Navigation = () => {
                             </>
                         )}
                         {!user && (
-                            <Nav.Link as={Link} to="/login" className="mx-2">Login</Nav.Link>
+                            <Nav.Link as={Link} to="/" className="mx-2">Login</Nav.Link>
                         )}
                         {user && (
                             <>

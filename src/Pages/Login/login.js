@@ -22,7 +22,7 @@ const Login = () => {
                 if (jwt) {
                     Cookies.set('token', jwt);
                     updateUser(response.data);
-                    navigate('/');
+                    navigate('/home');
                     console.log("Stored cookie: " + Cookies.get('token'));
                 }
             })

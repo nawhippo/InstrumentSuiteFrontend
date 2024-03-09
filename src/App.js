@@ -22,9 +22,9 @@ const App = () => {
                 <div className="App">
                     <Navigation />
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/tuner" element={<TuningPage />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/" element={<Login />} />
                         <Route path="/chords" element={<ChordPage /> } />
                         <Route path="/practicePlans" element={<PracticePlanListPage />} />
                         <Route path="/createAccount" element={<CreateAccount />} />
