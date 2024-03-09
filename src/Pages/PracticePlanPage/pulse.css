@@ -1,0 +1,10 @@
+.pulse-animation {
+    animation: pulse 0.25s;
+}
+
+@keyframes pulse {
+    /* Simple scale animation */
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

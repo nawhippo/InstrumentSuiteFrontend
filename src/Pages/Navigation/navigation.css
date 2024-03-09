@@ -1,0 +1,14 @@
+.nav-link {
+    transition: color 0.3s ease;
+
+}
+
+.nav-link:hover {
+    color: #ff6600;
+    transform: scale(1.05);
+}
+
+.navbar {
+    background: linear-gradient(145deg, #6a3093, darkslateblue);
+    min-height: 80px;
+}
