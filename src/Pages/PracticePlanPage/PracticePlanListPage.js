@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {ListGroup, Card, Button, Col, Row, Container} from 'react-bootstrap';
+import {ListGroup, Card, Button, Col, Row, Container, Alert} from 'react-bootstrap';
 import { useUserContext } from '../../Utility/UserContext';
 import Chord from "../ChordPage/Chord/Chord";
 import { useNavigate } from "react-router-dom";
@@ -15,27 +15,47 @@ const PracticePlanListPage = () => {
     const [newPlanName, setNewPlanName] = useState('');
     const [selectedChords, setSelectedChords] = useState([]);
     const [chordsMarkedForRemoval, setChordsMarkedForRemoval] = useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            if (user) {
-                try {
-                    const plansResponse = await axios.get(`/api/practicePlans/byUser`, {params: {userId: user.user.id}});
-                    console.log(plansResponse);
-                    const chordsResponse = await axios.get(`/api/chords/byTuning/${user?.selectedTuning.id}`);
-                    console.log("Cookies in practice list: " + Cookies.get('token'))
 
-                    setPracticePlans(Array.isArray(plansResponse.data) ? plansResponse.data : []);
+    useEffect(() => {
+
+        if (user?.selectedTuning?.id) {
+            const fetchChordsForTuning = async () => {
+                try {
+                    const chordsResponse = await axios.get(`/api/chords/byTuning/${user.selectedTuning.id}`);
                     setChordsListData(Array.isArray(chordsResponse.data) ? chordsResponse.data : []);
                 } catch (error) {
-                    console.error('Error fetching data:', error);
-                    setPracticePlans([]);
-                    setChordsListData([]);
+                    console.error('Error fetching chords data:', error);
                 }
-            }
-        };
-        fetchData();
+            };
+
+            fetchChordsForTuning();
+        }
+
+
+        if (user?.user?.id) {
+            const fetchPracticePlans = async () => {
+                try {
+                    const plansResponse = await axios.get(`/api/practicePlans/byUser`, { params: { userId: user.user.id } });
+                    setPracticePlans(Array.isArray(plansResponse.data) ? plansResponse.data : []);
+                } catch (error) {
+                    console.error('Error fetching practice plans:', error);
+                }
+            };
+
+            fetchPracticePlans();
+        }
     }, [user]);
 
+
+    if (!user || (!user.user && !user.selectedTuning)) {
+        return (
+            <Container className="mt-3">
+                <Alert variant="info">
+                    Please <a href="/login">login</a> or <a href="/register">create an account</a> to view and manage practice plans, or select an instrument and tuning to view chords.
+                </Alert>
+            </Container>
+        );
+    }
 
     const toggleChordRemovalMark = (chordId) => {
         setChordsMarkedForRemoval(prev =>
