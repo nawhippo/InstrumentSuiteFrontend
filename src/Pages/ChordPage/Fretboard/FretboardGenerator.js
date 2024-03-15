@@ -10,7 +10,7 @@ const FretboardGenerator = () => {
     useEffect(() => {
         if (user?.selectedInstrument && user?.selectedTuning) {
             if (!user.selectedTuning.fretboard) {
-                getFretboard(user.selectedInstrument, user.selectedTuning.id);
+                getFretboard(user.selectedInstrument, user.selectedTuning);
             } else {
                 setFretboard(user.selectedTuning.fretboard);
             }
@@ -18,7 +18,7 @@ const FretboardGenerator = () => {
     }, [user?.selectedInstrument, user?.selectedTuning]);
 
     const getFretboard = (instrument, tuningId) => {
-        axios.post('/api/instruments/fretboard', { instrumentId: instrument.id, tuningId })
+        axios.post('/api/instruments/fretboard', { instrument: user.selectedInstrument, tuning: user.selectedTuning })
             .then(response => {
                 setFretboard(response.data);
             })
