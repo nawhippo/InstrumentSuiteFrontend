@@ -25,7 +25,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ alignItems: "center" }}>
                         {!user && (
-                            <Nav.Link as={Link} to="/login" className="mx-2">Login</Nav.Link>
+                            <Nav.Link as={Link} to="/" className="mx-2">Login</Nav.Link>
                         )}
                         {hasRequiredSelections && (
                             <>
